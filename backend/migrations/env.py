@@ -5,8 +5,6 @@ from flask import current_app
 
 from alembic import context
 
-from app.models import ingredient, item, recipe, user
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
