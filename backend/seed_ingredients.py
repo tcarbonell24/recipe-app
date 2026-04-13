@@ -34,6 +34,12 @@ ingredients = [
         recipe_id=2,
         measurement="4 strips"
     ),
+    Ingredient(
+        id=4,
+        item_id=1,
+        recipe_id=2,
+        measurement="3 slices"
+    ),
 ]
 
 # Add all ingredients to the session and commit

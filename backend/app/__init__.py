@@ -20,11 +20,15 @@ def create_app():
     with app.app_context():
         from app.models import User, Recipe, Item, Ingredient
 
-    # from app.routes.card_routes import recipes_bp
+    from app.routes.recipes import recipes
+    from app.routes.items import items
+    from app.routes.users import users
     # from app.routes.auth_routes import auth_bp
     # from app.routes.saved_player_routes import saved_players_bp
 
-    # app.register_blueprint(recipes_bp)
+    app.register_blueprint(recipes)
+    app.register_blueprint(items)
+    app.register_blueprint(users)
     # app.register_blueprint(auth_bp)
     # app.register_blueprint(saved_players_bp)
 
