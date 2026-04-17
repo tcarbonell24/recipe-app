@@ -23,12 +23,14 @@ def create_app():
     from app.routes.recipes import recipes
     from app.routes.items import items
     from app.routes.users import users
+    from app.routes.ingredients import ingredients
     # from app.routes.auth_routes import auth_bp
     # from app.routes.saved_player_routes import saved_players_bp
 
     app.register_blueprint(recipes)
     app.register_blueprint(items)
     app.register_blueprint(users)
+    app.register_blueprint(ingredients)
     # app.register_blueprint(auth_bp)
     # app.register_blueprint(saved_players_bp)
 

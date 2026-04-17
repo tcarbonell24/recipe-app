@@ -1,5 +1,6 @@
 from app import db
 
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -7,4 +8,4 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
 
-    recipes = db.Relationship("Recipe", backref="user")
+    recipes = db.relationship("Recipe", backref="user")
