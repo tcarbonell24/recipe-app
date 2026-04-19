@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from app.models.recipe import Recipe
 from app.models.user import User
 from app.models.item import Item
@@ -36,6 +36,36 @@ def serialize_recipe(recipe):
             for ingredient in recipe.ingredients
         ],
     }
+    
+def get_current_user():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return None
+
+    return User.query.get(user_id)
+
+
+def require_login():
+    user = get_current_user()
+
+    if not user:
+        return None, (jsonify({"error": "Authentication required"}), 401)
+
+    return user, None
+
+
+def require_recipe_owner(recipe):
+    user = get_current_user()
+
+    if not user:
+        return None, (jsonify({"error": "Authentication required"}), 401)
+
+    if recipe.user_id != user.id:
+        return None, (jsonify({"error": "Unauthorized"}), 403)
+
+    return user, None
+    
 
 
 @recipes.route("/", methods=["GET"])
@@ -101,10 +131,13 @@ def get_recipes_by_user(user_id):
 
 @recipes.route("/", methods=["POST"])
 def create_recipe():
+    user, error_response = require_login()
+    if error_response:
+        return error_response
+
     data = request.get_json()
 
     name = data.get("name")
-    user_id = data.get("user_id")
     description = data.get("description")
     prep_time = data.get("prep_time")
     cook_time = data.get("cook_time")
@@ -114,20 +147,13 @@ def create_recipe():
     if not name:
         return jsonify({"error": "Recipe name is required"}), 400
 
-    if not user_id:
-        return jsonify({"error": "user_id is required"}), 400
-
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-
     existing_recipe = Recipe.query.filter_by(name=name).first()
     if existing_recipe:
         return jsonify({"error": "Recipe name already exists"}), 400
 
     new_recipe = Recipe(
         name=name,
-        user_id=user_id,
+        user_id=user.id,
         description=description,
         prep_time=prep_time,
         cook_time=cook_time,
@@ -148,10 +174,13 @@ def update_recipe(id):
     if not recipe:
         return jsonify({"error": "Recipe not found"}), 404
 
+    user, error_response = require_recipe_owner(recipe)
+    if error_response:
+        return error_response
+
     data = request.get_json()
 
     name = data.get("name")
-    user_id = data.get("user_id")
     description = data.get("description")
     prep_time = data.get("prep_time")
     cook_time = data.get("cook_time")
@@ -160,12 +189,6 @@ def update_recipe(id):
 
     if name is not None:
         recipe.name = name
-
-    if user_id is not None:
-        user = User.query.get(user_id)
-        if not user:
-            return jsonify({"error": "User not found"}), 404
-        recipe.user_id = user_id
 
     if description is not None:
         recipe.description = description
@@ -194,6 +217,10 @@ def delete_recipe(id):
     if not recipe:
         return jsonify({"error": "Recipe not found"}), 404
 
+    user, error_response = require_recipe_owner(recipe)
+    if error_response:
+        return error_response
+
     db.session.delete(recipe)
     db.session.commit()
 
@@ -206,6 +233,10 @@ def add_ingredient_to_recipe(id):
 
     if not recipe:
         return jsonify({"error": "Recipe not found"}), 404
+
+    user, error_response = require_recipe_owner(recipe)
+    if error_response:
+        return error_response
 
     data = request.get_json()
 
@@ -258,6 +289,10 @@ def remove_ingredient_from_recipe(recipe_id, ingredient_id):
 
     if not recipe:
         return jsonify({"error": "Recipe not found"}), 404
+
+    user, error_response = require_recipe_owner(recipe)
+    if error_response:
+        return error_response
 
     ingredient = Ingredient.query.get(ingredient_id)
 

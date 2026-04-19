@@ -12,23 +12,20 @@ db.create_all()
 User.query.delete()
 db.session.commit()
 
-# Users objects 
-users = [
-    User(
-        id=1,
-        username="tom",
-        password_hash="password123"
-    ),
-    User(
-        id=2,
-        username="sarah",
-        password_hash="password123"
-    ),
-]
+# Create users with hashed passwords
+user1 = User(id=1, username="tom")
+user1.set_password("password123")
+
+user2 = User(id=2, username="sarah")
+user2.set_password("password123")
+
+user3 = User(id=3, username="alex")
+user3.set_password("password123")
 
 # Add all users to the session and commit
+users = [user1, user2, user3]
+
 db.session.add_all(users)
 db.session.commit()
 
-total_users = len(users)
-print(f"Seeded {total_users} users successfully!")
+print(f"Seeded {len(users)} users successfully!")
