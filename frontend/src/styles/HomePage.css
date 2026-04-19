@@ -1,0 +1,49 @@
+.home-page {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.home-subtitle {
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.home-button:hover {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+}
+
+.home-button.primary {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+}
+
+.home-button.primary:hover {
+  opacity: 0.9;
+}

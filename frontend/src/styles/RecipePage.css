@@ -1,0 +1,170 @@
+.recipe-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.recipe-details-card,
+.recipe-section-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.recipe-page-title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-page-user,
+.recipe-page-description {
+  margin: 0.5rem 0;
+  color: var(--color-text);
+}
+
+.recipe-user-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.recipe-user-link:hover {
+  text-decoration: underline;
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+}
+
+.ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-list-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ingredient-list-item:last-child {
+  border-bottom: none;
+}
+
+.ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ingredient-measurement {
+  font-weight: 600;
+}
+
+.ingredient-name {
+  color: var(--color-text);
+}
+
+.add-ingredient-form,
+.edit-recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.recipe-input {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.recipe-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.ingredient-search-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.ingredient-result-button {
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  color: var(--color-text);
+  border: none;
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.ingredient-result-button:hover {
+  background-color: var(--color-surface);
+}
+
+.selected-ingredient {
+  margin: 0;
+  font-weight: 600;
+}
+
+.recipe-button-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recipe-button {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.recipe-button:hover {
+  opacity: 0.9;
+}
+
+.secondary-button,
+.remove-ingredient-button {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+.secondary-button:hover,
+.remove-ingredient-button:hover {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+}
+
+.recipe-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recipe-error {
+  margin-top: 1rem;
+  color: var(--color-text);
+}
