@@ -46,6 +46,34 @@ def get_recipes():
 
     return jsonify(recipe_list), 200
 
+@recipes.route("/search", methods=["GET"])
+def search_recipes():
+    query = request.args.get("q", "").strip()
+
+    if not query:
+        all_recipes = Recipe.query.all()
+        return jsonify([serialize_recipe(recipe) for recipe in all_recipes]), 200
+
+    search_term = f"%{query}%"
+
+    matching_recipes = (
+        Recipe.query
+        .outerjoin(User, Recipe.user_id == User.id)
+        .outerjoin(Ingredient, Ingredient.recipe_id == Recipe.id)
+        .outerjoin(Item, Ingredient.item_id == Item.id)
+        .filter(
+            db.or_(
+                Recipe.name.ilike(search_term),
+                User.username.ilike(search_term),
+                Item.item_name.ilike(search_term),
+            )
+        )
+        .distinct()
+        .all()
+    )
+
+    return jsonify([serialize_recipe(recipe) for recipe in matching_recipes]), 200
+
 
 @recipes.route("/<int:id>", methods=["GET"])
 def get_recipe_by_id(id):
